@@ -62,7 +62,7 @@ def filter_dates(data, date_dbt, date_fin):
 
 def get_poportions(data):
     if len(data) == 0:
-        return results
+        return {'cat':{}, 'Lieu':{}}
     results = {'cat':{}, 'Lieu':{}}
     for e in data:
         if e[0] not in results['cat'].keys():
