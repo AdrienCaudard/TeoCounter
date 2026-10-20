@@ -1,0 +1,261 @@
+@media (orientation: portrait), screen and (max-aspect-ratio: 1/1) {
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        min-height:100vh;
+        gap:2vw;
+        padding:1vw;
+        background:rgb(6, 0, 26);
+        font-family:"Trebuchet MS", Arial, sans-serif;
+        color:#d3d5ff;
+    }
+
+    h1{
+        text-align:center;
+        margin-bottom:20px;
+    }
+
+    h2{
+        margin-bottom:15px;
+    }
+
+    h3{
+        margin-bottom:10px;
+        font-size:1.4rem;
+    }
+
+    a, button, input{
+        display:inline-block;
+        background:#3c6ae7;
+        color:#222;
+        padding:10px 16px;
+        margin:5px 0;
+        border-radius:10px;
+        font-weight:bold;
+        text-decoration: none;
+        height: min-content;
+        font-size: x-small;
+    }
+    
+    a:hover, button:hover{
+        background-color: #01113d;
+    }
+
+    .Gauche{
+        grid-area:gauche;
+        top:20px;
+        background:rgba(255,255,255,.15);
+        max-height: 20vh;
+        display: flex;
+        flex-wrap: wrap;
+        height: min-content;
+    }
+
+    .centre{
+        grid-area:centre;
+        display:flex;
+        flex-direction:column;
+        gap:20px;
+        background:rgba(255, 255, 255, 0.15);
+        border-radius:15px;
+        padding:25px;
+    }
+
+    .Droite{
+        grid-area:droite;
+        top:20px;
+        background:rgba(255,255,255,.15);
+        border-radius:15px;
+        padding:20px;
+        box-shadow:0 4px 12px rgba(0,0,0,.15);
+    }
+
+    .content{
+        background:rgb(6, 5, 53);
+
+        border-radius:15px;
+
+        padding:25px;
+
+        box-shadow:0 3px 10px rgba(0,0,0,.15);
+    }
+
+    .hint{
+        color:#555;
+    }
+
+    .user-info{
+        margin-bottom:15px;
+        word-break:break-word;
+    }
+
+    .radioo{
+        height:fit-content;
+        border: solid white 0.1px;
+    }
+
+    .btn-logout{
+        width:100%;
+        text-align:center;
+    }
+
+    form{
+        display:flex;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    input,
+    select,
+    textarea{
+        width:100%;
+        height: min-content;
+        padding:10px;
+
+        border:1px solid #bbb;
+        border-radius:8px;
+
+        font-size:1rem;
+    }
+
+    .text-center{
+        text-align:center;
+    }
+}
+
+@media (orientation: landscape), screen and (min-aspect-ratio: 1/1){
+body{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:17vw 1fr 17vw;
+    grid-template-areas:
+        "gauche centre droite";
+    gap:2vw;
+    padding:1vw;
+    background:rgb(6, 0, 26);
+    font-family:"Trebuchet MS", Arial, sans-serif;
+    color:#d3d5ff;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+h2{
+    margin-bottom:15px;
+}
+
+h3{
+    margin-bottom:10px;
+    font-size:1.4rem;
+}
+
+a, button, input{
+    display:inline-block;
+    background:#3c6ae7;
+    color:#222;
+    padding:10px 16px;
+    margin:5px 0;
+    border-radius:10px;
+    font-weight:bold;
+    text-decoration: none;
+}
+a:hover, button:hover{
+    background-color: #01113d;
+}
+
+.Gauche{
+    grid-area:gauche;
+    position:sticky;
+    top:20px;
+    background:rgba(255,255,255,.20);
+    height: fit-content;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.centre{
+    grid-area:centre;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    background:rgba(255, 255, 255, 0.15);
+    border-radius:15px;
+    padding:25px;
+}
+
+.Droite{
+    grid-area:droite;
+    position:sticky;
+    top:20px;
+    align-self:start;
+    background:rgba(255,255,255,.15);
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.content{
+    background:rgb(6, 5, 53);
+
+    border-radius:15px;
+
+    padding:25px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.hint{
+    color:#555;
+}
+
+.user-info{
+    margin-bottom:15px;
+    word-break:break-word;
+}
+
+.radioo{
+    height:fit-content;
+    border: solid white 0.1px;
+}
+
+.btn-logout{
+    width:100%;
+    text-align:center;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+
+    padding:10px;
+
+    border:1px solid #bbb;
+    border-radius:8px;
+
+    font-size:1rem;
+}
+
+.text-center{
+    text-align:center;
+}
+}

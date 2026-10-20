@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil — GousGours</title>
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="Gauche">
+        {% if message != None %}
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <div class="Droite">
+        <p><a href="{{ url_for('index') }}" class="btn1">Accueil</a></p>
+    </div>
+
+    <main class="centre">
+        {% if total_heures is defined and proportions is defined %}
+            <div class="content">
+                <h2>Statistiques de mon planning</h2>
+
+                <p>
+                    <strong>Nombre total d'heures :</strong>
+                    {{ "%.2f"|format(total_heures) }} h
+                </p>
+            </div>
+            <div class='content'>
+                <h3>Répartition par catégorie</h3>
+                {% for categorie, stats in proportions['cat'].items() %}
+                    <p>
+                        <strong>{{ categorie }}</strong> :
+                        {{ stats[0] }} ({{ stats[1] }} rendez-vous)
+                    </p>
+                {% else %}
+                    <p>Aucune catégorie à afficher.</p>
+                {% endfor %}
+            </div>
+            <div class='content'>
+                <h3>Répartition par lieu</h3>
+                {% for lieu, stats in proportions['Lieu'].items() %}
+                    <p>
+                        <strong>{{ lieu }}</strong> :
+                        {{ stats[0] }} ({{ stats[1] }} rendez-vous)
+                    </p>
+                {% else %}
+                    <p>Aucun lieu à afficher.</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2>Importer mon emploi du temps :</h2>
+            <p> L'emploi du temps importé doit être au format CSV. Tout fichier autre ne sera pas traité. Pour récupérer un fichier CSV sous Teo, veuillez suivre la procédure ci-dessous : </p>
+            <form action="{{ url_for('index') }}" method="POST" enctype="multipart/form-data">
+                <label for="fichier_csv">Sélectionner mon emploi du temps (CSV) :</label>
+                <input type="file" id="fichier_csv" name="fichier_csv" accept=".csv,text/csv,.ics," required>
+                <br> <br>
+                <p> Renseignez la date de début de votre sélection</p>
+                <input type="date" id='jour1' name="jour1" required>
+                
+                <br><br>
+                <p>Renseignez la date de fin de votre sélection</p>
+                <input type='date' id='jour2' name="jour2" required>
+                <input type="submit" name="action" value="Importer">
+            </form>
+        {% endif %}
+    </main>
+</body>
+</html>
