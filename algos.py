@@ -32,5 +32,15 @@ def date_number_to_char(date):
     date = date.split('-')
     return date[2] + mois[int(date[1])] + date[0]
 
+def tri_data(data):
+    for i in range(len(data)):
+        idx_min = i
+        for j in range(i + 1, len(data)):
+            if data[j][0].lower() < data[idx_min][0].lower():
+                idx_min = j
+        data[i], data[idx_min] = data[idx_min], data[i]
+    return data
+            
+        
 if __name__ == '__main__':    
     print(get_duree_rdv('09:15:00', '11:30:00'))

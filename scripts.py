@@ -15,18 +15,13 @@ def csv_to_array(file, simplify = True):
         reader = csv.reader(fichier, quoting = csv.QUOTE_ALL)
         for row in reader:
             results.append(row)
-    print("Données simplifiées")
     i = 0
     while i < len(results): 
         print(results[i][0].lower(), filtres)
         if results[i][0].lower() in filtres:
             results.pop(i)
-            print("Ca degage")
         else:
-            print(results[i], i)
             i += 1
-        print()
-    print("Repos viré")
     if simplify == True:
         return simplify_data(results)
     return results
@@ -75,9 +70,10 @@ def get_poportions(data):
         results['Lieu'][e[-1]] += 1
     for cle, elts in results.items():
         for cat, cptr in elts.items():
-            results[cle][cat] = (str(round((cptr / len(data))*100)) + '%', cptr)
-            if results[cle][cat] == '0%':
-                results[cle][cat] = "<1%"
+            prct = str(round((cptr / len(data))*100)) + '%'
+            if prct == '0%':
+                prct = "<1%"
+            results[cle][cat] = (prct, cptr)
     return results
 
 def get_totaux(data):
@@ -88,4 +84,4 @@ def get_totaux(data):
 
 def get_data(file, jour1, jour2):
     data = filter_dates(csv_to_array(file), jour1, jour2)
-    return (data, get_totaux(data), get_poportions(data))
+    return (algos.tri_data(data), get_totaux(data), get_poportions(data))
