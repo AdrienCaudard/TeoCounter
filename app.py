@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import os
-import scripts, algos
+import scripts, algos   # Not importing all of it for finding the functions easier if something goes wrong.
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,7 +17,7 @@ def index():
             fichier = request.files.get("fichier_csv")
             jour1 = request.form.get("jour1")
             jour2 = request.form.get('jour2')
-            if fichier and fichier.filename != "":
+            if fichier and fichier.filename != "":      # Treatment for any file that would have been transmitted via POST request.
                 chemin = os.path.join(app.config["UPLOAD_FOLDER"],os.path.basename(fichier.filename))
                 fichier.save(chemin)
                 data = scripts.get_data(chemin, jour1, jour2)
