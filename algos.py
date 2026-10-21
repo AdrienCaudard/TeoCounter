@@ -28,7 +28,7 @@ def get_duree_rdv(heure1, heure2):
     return (sum(heure2) - sum(heure1))/60
 
 def date_number_to_char(date):
-    mois = ["", " Janvier ", " Février ", " Mars ", " Avril ", " Mai ", " Juin ", " Août ", " Septembre ", " Octobre ", " Novembre ", " Décembre "]
+    mois = ["", " Janvier ", " Février ", " Mars ", " Avril ", " Mai ", " Juin ", "Juillet", " Août ", " Septembre ", " Octobre ", " Novembre ", " Décembre "]
     date = date.split('-')
     return date[2] + mois[int(date[1])] + date[0]
 
