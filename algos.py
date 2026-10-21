@@ -36,7 +36,7 @@ def date_number_to_char(date):
     '''
     Splits DD MM YYYY date to DD Month YYYY
     '''
-
+    
     mois = ["", " Janvier ", " Février ", " Mars ", " Avril ", " Mai ", " Juin ", "Juillet", " Août ", " Septembre ", " Octobre ", " Novembre ", " Décembre "]
 
     date = date.split('-')
