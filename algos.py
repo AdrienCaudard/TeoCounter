@@ -4,7 +4,6 @@ def add_zeros(date):
     """
     elts = ['']
     compteur = 0
-    print(date)
     for i in range(len(date)):
         if date[i] in '-/':
             compteur +=1
@@ -27,6 +26,11 @@ def get_duree_rdv(heure1, heure2):
         heure1[i] = int(heure1[i]) * multiplicateurs[i]
         heure2[i] = int(heure2[i]) * multiplicateurs[i]
     return (sum(heure2) - sum(heure1))/60
+
+def date_number_to_char(date):
+    mois = ["", " Janvier ", " Février ", " Mars ", " Avril ", " Mai ", " Juin ", " Août ", " Septembre ", " Octobre ", " Novembre ", " Décembre "]
+    date = date.split('-')
+    return date[2] + mois[int(date[1])] + date[0]
 
 if __name__ == '__main__':    
     print(get_duree_rdv('09:15:00', '11:30:00'))

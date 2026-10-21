@@ -16,14 +16,16 @@ def csv_to_array(file, simplify = True):
         for row in reader:
             results.append(row)
     print("Données simplifiées")
-    for i in range(len(results)):
-        if i >= len(results):
-            break
-        print(results[i])
-        for e in filtres:
-            print(results[0])
-            if e in results[i][0].lower():
-                results.pop(i)
+    i = 0
+    while i < len(results): 
+        print(results[i][0].lower(), filtres)
+        if results[i][0].lower() in filtres:
+            results.pop(i)
+            print("Ca degage")
+        else:
+            print(results[i], i)
+            i += 1
+        print()
     print("Repos viré")
     if simplify == True:
         return simplify_data(results)
@@ -74,6 +76,8 @@ def get_poportions(data):
     for cle, elts in results.items():
         for cat, cptr in elts.items():
             results[cle][cat] = (str(round((cptr / len(data))*100)) + '%', cptr)
+            if results[cle][cat] == '0%':
+                results[cle][cat] = "<1%"
     return results
 
 def get_totaux(data):

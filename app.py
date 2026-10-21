@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import os
-import scripts
+import scripts, algos
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,11 +20,8 @@ def index():
             if fichier and fichier.filename != "":
                 chemin = os.path.join(app.config["UPLOAD_FOLDER"],os.path.basename(fichier.filename))
                 fichier.save(chemin)
-                print(f'Jour 1 : {jour1}, Jour 2 : {jour2}')
                 data = scripts.get_data(chemin, jour1, jour2)
-                print(data)
-                
-                return render_template("accueil.html",total_heures=data[1],proportions=data[2], message = f"Statistiques calculées du {jour1} au {jour2}")
+                return render_template("accueil.html",total_heures=data[1],proportions=data[2], message = f"Statistiques calculées du {algos.date_number_to_char(jour1)} au {algos.date_number_to_char(jour2)}")
     return render_template("accueil.html", message = None)
 
 if __name__ == "__main__":

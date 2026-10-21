@@ -51,7 +51,7 @@
             </div>
         {% else %}
             <h2>Importer mon emploi du temps :</h2>
-            <p> L'emploi du temps importé doit être au format CSV. Tout fichier autre ne sera pas traité. Pour récupérer un fichier CSV sous Teo, veuillez suivre la procédure ci-dessous : </p>
+            <p> L'emploi du temps importé doit être au format CSV. Tout fichier autre ne sera pas traité. Pour récupérer un fichier CSV sous Outlook Classic , veuillez exporter les données de votre emploi du temps en tant que données séparées par des virgules. </p>
             <form action="{{ url_for('index') }}" method="POST" enctype="multipart/form-data">
                 <label for="fichier_csv">Sélectionner mon emploi du temps (CSV) :</label>
                 <input type="file" id="fichier_csv" name="fichier_csv" accept=".csv,text/csv,.ics," required>
@@ -65,6 +65,7 @@
                 <input type="submit" name="action" value="Importer">
             </form>
         {% endif %}
+        <p>Plateforme développée par Adrien Caudard. Des mises à jour sont à prévoir - 21/10/2026</p>
     </main>
 </body>
 </html>
