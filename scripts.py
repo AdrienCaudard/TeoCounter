@@ -61,19 +61,23 @@ def get_poportions(data):
     if len(data) == 0:
         return {'cat':{}, 'Lieu':{}}
     results = {'cat':{}, 'Lieu':{}}
-    for e in data:
+    
+    for e in data:                                  # Counting the occurency of every meeting category or every place of work.
         if e[0] not in results['cat'].keys():
             results['cat'][e[0]] = 0
         if e[-1] not in results['Lieu'].keys():
             results['Lieu'][e[-1]] = 0
-        results['cat'][e[0]] += 1
-        results['Lieu'][e[-1]] += 1
+        duree = algos.get_duree_rdv(e[2], e[4])
+        results['cat'][e[0]] += duree               # Adding the time of the meeting into the dict              
+        results['Lieu'][e[-1]] += duree
+    
     for cle, elts in results.items():
         for cat, cptr in elts.items():
-            prct = str(round((cptr / len(data))*100)) + '%'
+            prct = str(round((cptr / get_totaux(data)*100))) + '%'
             if prct == '0%':
                 prct = "<1%"
-            results[cle][cat] = (prct, cptr)
+            print(prct)
+            results[cle][cat] = (prct, algos.get_time_minutes(cptr))
     return results
 
 def get_totaux(data):

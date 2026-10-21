@@ -41,6 +41,13 @@ def tri_data(data):
         data[i], data[idx_min] = data[idx_min], data[i]
     return data
             
+def get_time_minutes(time):
+    '''
+    Transforms raw time data (1.66h) into a readable format -> 1H 40min for example.
+    The data in parameter is a float or an int.
+    '''
+    return str(round(time // 1)) + "h " + str(round((time - time//1) * 60)) + "min"
         
 if __name__ == '__main__':    
     print(get_duree_rdv('09:15:00', '11:30:00'))
+    print(get_time_minutes(1.66))
