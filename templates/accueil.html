@@ -24,7 +24,7 @@
 
                 <p>
                     <strong>Nombre total d'heures :</strong>
-                    <g>{{ "%.2f"|format(total_heures) }} h </g>
+                    <g>{{ total_heures }}</g>
                 </p>
             </div>
             <div class='content'>
@@ -32,7 +32,7 @@
                 {% for categorie, stats in proportions['cat'].items() %}
                     <p>
                         <strong>{{ categorie }}</strong> :
-                        {{ stats[0] }} (<g>{{ stats[1] }}</g> de rendez-vous)
+                        {{ stats[0] }} (<g>{{ stats[1] }}</g>)
                     </p>
                     <br>
                 {% else %}
@@ -44,7 +44,7 @@
                 {% for lieu, stats in proportions['Lieu'].items() %}
                     <p>
                         <strong>{{ lieu }}</strong> :
-                        {{ stats[0] }} ( <g>{{ stats[1] }}</g> de rendez-vous)
+                        {{ stats[0] }} ( <g>{{ stats[1] }}</g>)
                     </p>
                     <br>
                 {% else %}

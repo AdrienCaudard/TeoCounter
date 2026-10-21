@@ -20,7 +20,6 @@ def csv_to_array(file, simplify = True):
             results.append(row)
     i = 0
     while i < len(results):                     # Removes the rows whose title matches one of the filters line 6
-        print(results[i][0].lower(), filtres)
         if results[i][0].lower() in filtres:
             results.pop(i)
         else:
@@ -86,7 +85,6 @@ def get_poportions(data):
             prct = str(round((cptr / get_totaux(data)*100))) + '%'
             if prct == '0%':
                 prct = "<1%"
-            print(prct)
             results[cle][cat] = (prct, algos.get_time_minutes(cptr))
     return results
 
@@ -101,4 +99,4 @@ def get_totaux(data):
 
 def get_data(file, jour1, jour2):
     data = filter_dates(csv_to_array(file), jour1, jour2)
-    return (algos.tri_data(data), get_totaux(data), get_poportions(data))
+    return (algos.tri_data(data), algos.get_time_minutes(get_totaux(data)), get_poportions(data))
