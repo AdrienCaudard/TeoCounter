@@ -29,4 +29,4 @@ if __name__ == "__main__":
     print("--------------------------------------------")
     print(app.url_map)
     print("--------------------------------------------")
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)

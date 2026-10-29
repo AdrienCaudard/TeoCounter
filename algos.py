@@ -1,3 +1,5 @@
+from datetime import date
+
 def lire_ics(file):
     return  # Not defined yet, has to transform the ICS data into an array that I can use
 
@@ -23,14 +25,32 @@ def add_zeros(date):
             elts[i] = '0' * (intlen[i] - len(elts[i])) + elts[i]
     return elts[2] + '/' + elts[1] + '/' + elts[0]
 
-def get_duree_rdv(heure1, heure2):
+
+def delta_date(jr1, jr2):
+    jr1 = jr1.split('/')
+    jr2 = jr2.split("/")
+    if len(jr1[0]) > len(jr1[2]):
+        jr1[0], jr1[2] = jr1[2], jr1[0]
+    if len(jr2[0]) > len(jr2[2]):
+        jr2[0], jr2[2] = jr2[2], jr2[0]
+    for i in range(3):
+        jr1[i] = int(jr1[i])
+        jr2[i] = int(jr2[i])
+    jr1 = date(jr1[2], jr1[1], jr1[0])
+    jr2 = date(jr2[2], jr2[1], jr2[0])
+    res = jr2 - jr1
+    return res.days
+
+
+def get_duree_rdv(heure1, heure2, jr1 = "12/12/1212", jr2 = "12/12/1212"):
     heure1 = heure1.split(":")
     heure2 = heure2.split(':')
     multiplicateurs = [60,1,1/60]   # In order to get a data in minutes
     for i in range(3):
         heure1[i] = round(int(heure1[i]) * multiplicateurs[i])
         heure2[i] = round(int(heure2[i]) * multiplicateurs[i])
-    return (sum(heure2) - sum(heure1))/60
+    res = [((sum(heure2) - sum(heure1))/60), 24 * delta_date(jr1, jr2)]
+    return sum(res)
 
 def date_number_to_char(date):
     '''

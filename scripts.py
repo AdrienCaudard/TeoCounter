@@ -1,7 +1,7 @@
 import csv
 import algos
 import os
-import datetime
+from lire_ics import lire_ics
 
 filtres = ['repos']
 
@@ -11,21 +11,23 @@ def csv_to_array(file, simplify = True):
     Transformms a CSV file from Outlook classic into an array
     """
     extension = os.path.splitext(file)[1].lower()
+    print(f"Type de fichier : fichier {extension}")
     if extension == '.ics':
-        return lire_ics(file)
-    results = []
-    with open(file, encoding="utf-8-sig", newline="") as fichier: # Reads every row of the CSV file and sends it into my array
-        reader = csv.reader(fichier, quoting = csv.QUOTE_ALL)
-        for row in reader:
-            results.append(row)
+        results = lire_ics(file)
+    else:
+        results = []
+        with open(file, encoding="utf-8-sig", newline="") as fichier: # Reads every row of the CSV file and sends it into my array
+            reader = csv.reader(fichier, quoting = csv.QUOTE_ALL)
+            for row in reader:
+                results.append(row)
+        if simplify == True:
+            results = simplify_data(results)
     i = 0
     while i < len(results):                     # Removes the rows whose title matches one of the filters line 6
         if results[i][0].lower() in filtres:
             results.pop(i)
         else:
             i += 1
-    if simplify == True:
-        return simplify_data(results)
     return results
 
 
@@ -67,22 +69,17 @@ def filter_dates(data, date_dbt, date_fin):
 
 
 def get_poportions(data):
-    if len(data) == 0:
-        return {'cat':{}, 'Lieu':{}}
-    results = {'cat':{}, 'Lieu':{}}
-    
-    for e in data:                                  # Counting the occurency of every meeting category or every place of work.
-        if e[0] not in results['cat'].keys():
-            results['cat'][e[0]] = 0
-        if e[-1] not in results['Lieu'].keys():
-            results['Lieu'][e[-1]] = 0
-        duree = algos.get_duree_rdv(e[2], e[4])
-        results['cat'][e[0]] += duree               # Adding the time of the meeting into the dict              
-        results['Lieu'][e[-1]] += duree
-    
+    results = {'cat': {}, 'Lieu': {}}
+    if not data:
+        return results
+    total = get_totaux(data)
+    for e in data:
+        duree = algos.get_duree_rdv(e[2], e[4], e[1], e[3])
+        results['cat'][e[0]] = results['cat'].get(e[0], 0) + duree
+        results['Lieu'][e[-1]] = results['Lieu'].get(e[-1], 0) + duree
     for cle, elts in results.items():
         for cat, cptr in elts.items():
-            prct = str(round((cptr / get_totaux(data)*100))) + '%'
+            prct = f"{round(cptr / total * 100)}%" if total else "0%"
             if prct == '0%':
                 prct = "<1%"
             results[cle][cat] = (prct, algos.get_time_minutes(cptr))
@@ -94,9 +91,14 @@ def get_totaux(data):
     """
     ttal = 0
     for rv in data:
-        ttal += algos.get_duree_rdv(rv[2], rv[4])
+        ttal += algos.get_duree_rdv(rv[2], rv[4], rv[1], rv[3])
     return ttal
 
 def get_data(file, jour1, jour2):
     data = filter_dates(csv_to_array(file), jour1, jour2)
-    return (algos.tri_data(data), algos.get_time_minutes(get_totaux(data)), get_poportions(data))
+    res = (algos.tri_data(data), algos.get_time_minutes(get_totaux(data)), get_poportions(data))
+    return res
+
+if __name__ == "__main__":
+    a = csv_to_array("edt_annee.CSV")
+    print(get_data("file.ics", "2026-11-02", "2026-11-06")[1])
