@@ -7,6 +7,9 @@ def get_dico_base():
         return {'BEGIN':'',"DTSTAMP":'',"PEOPLE":'', "UID":'',"DTSTART":'',"DTEND":'',"SUMMARY":"","DESCRIPTION":'',"LOCATION":'',"END":''}
 
 def dic_to_array(dict):
+    """
+    Formats an element from 20261203T101500Z to a supported date
+    """
     debut, fin = dict['DTSTART'], dict['DTEND']
     return [
         dict['SUMMARY'],
@@ -19,32 +22,38 @@ def dic_to_array(dict):
     ]
 
 def formater_row(row):
+        """
+        Splits elements for each row of the ICS File
+        """
         if row != []:
             a = row[0].split(':')
             return a
         return ['Erreur']
 
 def lire_ics(file):
+    """
+    Reads an ICS file and formats it to match the arrays used by csv_to_array (scripts.py)
+    """
     results = []
     debut = False
-
-
     with open(file, encoding="utf-8-sig", newline="") as fichier: # Reads every row of the CSV file and sends it into my array
         reader = csv.reader(fichier, quoting = csv.QUOTE_ALL)
         dico = get_dico_base()
         for row in reader:
             row = formater_row(row)
-            if row == ['BEGIN', 'VEVENT']:
+            if row == ['BEGIN', 'VEVENT']:      # Starts filling my dictionnary only when the beginning is detected with the row BEGIN:VEVENT
                 debut = True
+
             if debut == True:
                 if len(row) == 1:
-                    row = ["PEOPLE", row]                
-                dico[row[0]] = row[1]
+                    row = ["PEOPLE", row]       # The rows for the people in a meeting not being titled (row => JEAN), Adds a title for it in the dictionnary       
+
+                dico[row[0]] = row[1]           # Splits the rows in the dictionnary
                 if row == ['END', 'VEVENT']:
-                    res = dic_to_array(dico)
+                    res = dic_to_array(dico)    # Creates an array out of the dictionnary created 
                     if res[0].strip() != "" and not res[0].startswith("ANNULE"):
-                        results.append(res)
-                    dico = get_dico_base()      # hors du if
+                        results.append(res)     # Creates the array of arrays
+                    dico = get_dico_base()      # Deletes the dictionnary created, creates another one instead for the next event
                     debut = False
     return results
 

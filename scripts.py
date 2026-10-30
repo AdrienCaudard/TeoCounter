@@ -69,16 +69,16 @@ def filter_dates(data, date_dbt, date_fin):
 
 
 def get_poportions(data):
-    results = {'cat': {}, 'Lieu': {}}
+    results = {'cat': {}, 'Lieu': {}}           # Creates a dictionnary in order to iterate the working hours
     if not data:
         return results
     total = get_totaux(data)
     for e in data:
-        duree = algos.get_duree_rdv(e[2], e[4], e[1], e[3])
+        duree = algos.get_duree_rdv(e[2], e[4], e[1], e[3])             # Gets the length in time for the row selected
         results['cat'][e[0]] = results['cat'].get(e[0], 0) + duree
         results['Lieu'][e[-1]] = results['Lieu'].get(e[-1], 0) + duree
-    for cle, elts in results.items():
-        for cat, cptr in elts.items():
+    for cle, elts in results.items():                                   # Selects every category counted
+        for cat, cptr in elts.items():                                  # Selects Every type of meeting among the categorys
             prct = f"{round(cptr / total * 100)}%" if total else "0%"
             if prct == '0%':
                 prct = "<1%"
@@ -91,10 +91,13 @@ def get_totaux(data):
     """
     ttal = 0
     for rv in data:
-        ttal += algos.get_duree_rdv(rv[2], rv[4], rv[1], rv[3])
+        ttal += algos.get_duree_rdv(rv[2], rv[4], rv[1], rv[3])         # Counts the total of hours in the data filtered
     return ttal
 
 def get_data(file, jour1, jour2):
+    """
+    Returns a tuple (Sorted data , Total of time , proportions for each meeting)
+    """
     data = filter_dates(csv_to_array(file), jour1, jour2)
     res = (algos.tri_data(data), algos.get_time_minutes(get_totaux(data)), get_poportions(data))
     return res

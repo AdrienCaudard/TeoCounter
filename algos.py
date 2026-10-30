@@ -27,16 +27,20 @@ def add_zeros(date):
 
 
 def delta_date(jr1, jr2):
+    """
+    Returns the number of days between two dates.
+    """
     jr1 = jr1.split('/')
     jr2 = jr2.split("/")
     if len(jr1[0]) > len(jr1[2]):
-        jr1[0], jr1[2] = jr1[2], jr1[0]
+        jr1[0], jr1[2] = jr1[2], jr1[0] # Reverses the date format if needed for jr1
     if len(jr2[0]) > len(jr2[2]):
-        jr2[0], jr2[2] = jr2[2], jr2[0]
+        jr2[0], jr2[2] = jr2[2], jr2[0] # For jr2
+
     for i in range(3):
         jr1[i] = int(jr1[i])
         jr2[i] = int(jr2[i])
-    jr1 = date(jr1[2], jr1[1], jr1[0])
+    jr1 = date(jr1[2], jr1[1], jr1[0])      # Uses datetime library to get the time between two given days
     jr2 = date(jr2[2], jr2[1], jr2[0])
     res = jr2 - jr1
     return res.days
@@ -49,7 +53,7 @@ def get_duree_rdv(heure1, heure2, jr1 = "12/12/1212", jr2 = "12/12/1212"):
     for i in range(3):
         heure1[i] = round(int(heure1[i]) * multiplicateurs[i])
         heure2[i] = round(int(heure2[i]) * multiplicateurs[i])
-    res = [((sum(heure2) - sum(heure1))/60), 24 * delta_date(jr1, jr2)]
+    res = [((sum(heure2) - sum(heure1))/60), 24 * delta_date(jr1, jr2)] # res = (time delta in a day) + (24 * number of days between those two)
     return sum(res)
 
 def date_number_to_char(date):
